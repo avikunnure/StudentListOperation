@@ -1,0 +1,91 @@
+﻿@model Student
+@{
+    
+}
+<h1>Create</h1>
+
+<h4>Employee</h4>
+<hr />
+<div class="row">
+    <form formmethod="post">
+        <div class="col-md-12">
+
+            @Html.ValidationSummary(true,"",new{@class="text-danger"})
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model=>model.Id)
+          
+            <div class="col-md-4">
+                <div class="form-group">
+                    @Html.LabelFor(model=>model.FirstName,new {@class="control-label"})
+                    @Html.TextBoxFor(model=>model.FirstName,"",new{@class="form-control"})
+                    @Html.ValidationMessageFor(model=>model.FirstName,"",new{@class="text-danger"})
+
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    @Html.LabelFor(model=>model.MiddleName,new {@class="control-label"})
+                    @Html.TextBoxFor(model=>model.MiddleName,"",new{@class="form-control"})
+                    @Html.ValidationMessageFor(model=>model.MiddleName,"",new{@class="text-danger"})
+
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    @Html.LabelFor(model=>model.LastName,new {@class="control-label"})
+                    @Html.TextBoxFor(model=>model.LastName,"",new{@class="form-control"})
+                    @Html.ValidationMessageFor(model=>model.LastName,"",new{@class="text-danger"})
+
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    @Html.LabelFor(model=>model.ClassName,new {@class="control-label"})
+                    @Html.TextBoxFor(model=>model.ClassName,"",new{@class="form-control"})
+
+
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <button type="submit" formmethod="post" formaction="@Url.Action("AddEduction","Student")" class=" btn btn-primary"> Add Education </button>
+                    @await Html.PartialAsync("~/Views/Student/_Subjects.cshtml",model:Model)
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    @if (Model.Id > 0)
+                    {
+
+                        <button type="submit" formmethod="post" formaction="@Url.Action("Edit","Student",new{id=Model.Id})" class="btn btn-primary">Save</button>
+
+                    }
+                    else
+                    {
+
+                        <button type="submit" formmethod="post" formaction="@Url.Action("Create","Student")" class="btn btn-primary">Save</button>
+
+                    }
+                    <a asp-action="Index" class="btn btn-info">Back to List</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+@section Scripts {
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+<script>
+ 
+    function DeleteItem(data){
+        var row =$(data).closest('tr');
+       $(row).find(".IsDeleted").val(true);
+        $(row).css('display','none');
+    }
+
+</script>
+}

@@ -1,0 +1,56 @@
+﻿@model Student
+
+@{
+    
+}
+
+
+<div>
+    <table class="table table-bordered">
+
+        <thead>
+            <tr>
+                <th>
+                    Name of Subjects
+                </th>
+                <th>
+                    Mark
+                </th>
+                <th>
+                    actions
+                </th>
+            </tr>
+
+
+        </thead>
+        <tbody>
+            @if (Model.Subjects != null)
+            {
+                for (var i = 0; i < Model.Subjects.Count; i++)
+                {
+                    var dispCon = Model.Subjects[i].IsDeleted ? "none" : "";
+
+                    <tr style="display:@dispCon;">
+                        <th>
+                            @Html.HiddenFor(model=>model.Subjects[i].StudentId)
+                            @Html.HiddenFor(model=>model.Subjects[i].Id)
+                            @Html.HiddenFor(model=>model.Subjects[i].IsDeleted,new {@class="IsDeleted"})
+                            @Html.DropDownListFor(model=>model.Subjects[i].SubjectId,new SelectList(Model.SubjectsNVList,"Key","Value",Model.Subjects[i].SubjectId),new{@class="form-control"})
+                            @Html.ValidationMessageFor(model=>model.Subjects[i].SubjectId,"",new{@class="text-danger"})
+                        </th>
+                        <th>
+                            @Html.TextBoxFor(model=>model.Subjects[i].Marks,"",new{@class="form-control"})
+                            @Html.ValidationMessageFor(model=>model.Subjects[i].Marks,"",new{@class="text-danger"})
+                        </th>
+
+                        <th>
+                            <button type="button" class="btn btn-danger" onclick="DeleteItem(this);">Delete</button>
+                        </th>
+                    </tr>
+                }
+            }
+
+        </tbody>
+    </table>
+</div>
+
